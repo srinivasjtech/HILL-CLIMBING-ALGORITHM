@@ -1,6 +1,6 @@
 <h1>ExpNo 5 : Implement Simple Hill Climbing Algorithm</h1> 
-<h3>Name:             </h3>
-<h3>Register Number:             </h3>
+<h3>Name:    Srinivas J         </h3>
+<h3>Register Number:  212225230276           </h3>
 <H3>Aim:</H3>
 <p>Implement Simple Hill Climbing Algorithm and Generate a String by Mutating a Single Character at each iteration </p>
 <h2> Theory: </h2>
@@ -39,6 +39,63 @@ Feedback is provided in terms of heuristic function
 <p> Lopp Step -2 and Step-3  until we achieve the score to be Zero to achieve Global Minima.</p>
 
 <hr>
+
+### Program
+
+```py
+import random
+import string
+
+def hill_climbing(target):
+    # Generate initial random string
+    current = ''.join(
+        ' ' if char == ' ' else random.choice(string.ascii_lowercase)
+        for char in target
+    )
+
+    def heuristic(s):
+        # Count matching characters
+        return sum(a == b for a, b in zip(s, target))
+
+    print("Initial:", current)
+
+    while current != target:
+        best_state = current
+        best_score = heuristic(current)
+
+        # Mutate one character at a time
+        for i in range(len(current)):
+
+            # Do not change the space
+            if target[i] == ' ':
+                continue
+
+            for ch in string.ascii_lowercase:
+                new_state = current[:i] + ch + current[i+1:]
+                score = heuristic(new_state)
+
+                if score > best_score:
+                    best_state = new_state
+                    best_score = score
+
+        if best_state == current:
+            print("No better state found.")
+            break
+
+        current = best_state
+        print("Current:", current)
+
+    return current
+
+
+# Target string
+target = "artificial intelligence"
+
+result = hill_climbing(target)
+
+print("Final:", result)
+```
+
 <h2>Sample Input and Output</h2>
 <h2>Sample String:</h2> Artificial Intelligence
 <h2>Output:</h2>
@@ -59,3 +116,10 @@ Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 0  Solution :  Artificial Intelligence<br>
+
+<hr>
+
+### Output
+
+<img width="457" height="580" alt="Screenshot 2026-08-19 155534" src="https://github.com/user-attachments/assets/a8870b44-6d21-4bff-81de-7ebb5f2d1651" />
+
